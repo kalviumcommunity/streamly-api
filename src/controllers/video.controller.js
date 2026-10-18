@@ -6,7 +6,7 @@
 // Copy the pattern from channel.controller.js EXACTLY:
 //   async/await + try/catch  ->  ONE Mongoose op  ->  send response.
 //   On any throw, call next(err). Never format errors here.
-
+import { Video } from "../models/video.model.js";
 import mongoose from "mongoose";
 // TODO: import the Video model once video.model.js exports it:
 // import { Video } from "../models/video.model.js";
@@ -14,17 +14,17 @@ import mongoose from "mongoose";
 // ---- TASK 2: CRUD ----------------------------------------------------------
 
 // CREATE  ->  201 with the created video
-export async function createVideo(req, res, next) {
+ async function createVideo(req, res, next) {
   // TODO: try { create from req.body; res.status(201).json(video) } catch { next(err) }
 }
 
 // READ ONE  ->  200 with the video, or 404 if not found
-export async function getVideo(req, res, next) {
+ async function getVideo(req, res, next) {
   // TODO: findById(req.params.id); if missing return 404; else res.json(video)
 }
 
 // DELETE  ->  204 no content, or 404 if not found
-export async function deleteVideo(req, res, next) {
+ async function deleteVideo(req, res, next) {
   // TODO: findByIdAndDelete(req.params.id); if missing return 404; else res.status(204).send()
 }
 
@@ -38,7 +38,7 @@ export async function deleteVideo(req, res, next) {
 //   $project title, views (and _id)
 //
 // Respond with: { channelId: req.params.id, count: videos.length, videos }
-export async function topVideos(req, res, next) {
+ async function topVideos(req, res, next) {
   // TODO:
   // try {
   //   const channelId = new mongoose.Types.ObjectId(req.params.id);
@@ -46,3 +46,4 @@ export async function topVideos(req, res, next) {
   //   res.json({ channelId: req.params.id, count: videos.length, videos });
   // } catch (err) { next(err); }
 }
+export { createVideo, getVideo, deleteVideo, topVideos };
