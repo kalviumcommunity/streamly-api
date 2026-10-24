@@ -15,16 +15,43 @@
 
 import mongoose from "mongoose";
 
-// TODO: build the schema described above.
 const videoSchema = new mongoose.Schema(
   {
-    // TODO: title
-    // TODO: channelId
-    // TODO: slug
-    // TODO: views
-    // TODO: status
+    title: {
+      type: String,
+      required: [true, "Video title is required"],
+      trim: true,
+      maxlength: [120, "Video title cannot exceed 120 characters"],
+    },
+
+    channelId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Channel",
+      required: true,
+    },
+
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+    },
+
+    views: {
+      type: Number,
+      default: 0,
+      min: [0, "Views cannot be negative"],
+    },
+
+    status: {
+      type: String,
+      enum: ["draft", "published"],
+      default: "draft",
+    },
   },
-  { /* TODO: timestamps */ }
+  { timestamps: true }
 );
+
+export const Video = mongoose.model("Video", videoSchema);
 
 // TODO: export const Video = mongoose.model("Video", videoSchema);
