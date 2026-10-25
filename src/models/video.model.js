@@ -13,18 +13,62 @@
 // Enable timestamps so createdAt / updatedAt are added automatically.
 // Export a model named "Video".
 
-import mongoose from "mongoose";
 
 // TODO: build the schema described above.
-const videoSchema = new mongoose.Schema(
+// const videoSchema = new mongoose.Schema(
   {
     // TODO: title
     // TODO: channelId
     // TODO: slug
     // TODO: views
     // TODO: status
-  },
+  }
   { /* TODO: timestamps */ }
-);
+ //
 
 // TODO: export const Video = mongoose.model("Video", videoSchema);
+
+import mongoose from "mongoose";
+
+const videoSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: [true, "title is required"],
+      trim: true,
+      maxlength: 120,
+    },
+
+    channelId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Channel",
+      required: true,
+    },
+
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+    },
+
+    views: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+
+    status: {
+      type: String,
+      enum: ["draft", "published"],
+      default: "draft",
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+export const Video = mongoose.model("Video", videoSchema);
+
+
